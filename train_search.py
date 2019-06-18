@@ -48,7 +48,10 @@ parser.add_argument('--cifar100', action='store_true', default=False, help='sear
 
 args = parser.parse_args()
 
-args.save = '{}search-{}-{}'.format(args.save, args.note, time.strftime("%Y%m%d-%H%M%S"))
+#args.save = '{}search-{}-{}'.format(args.save, args.note, time.strftime("%Y%m%d-%H%M%S"))
+import shutil
+args.save = '{}search'.format(args.save)
+if os.path.exists(args.save):shutil.rmtree(args.save)
 utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
 
 log_format = '%(asctime)s %(message)s'
@@ -263,7 +266,13 @@ def main():
                 logging.info('Number of skip-connect: %d', max_sk)
                 genotype = parse_network(switches_normal, switches_reduce)
                 logging.info(genotype)              
+            rf = open('genotypes.py','r').read().strip()
+            if rf.find('SEARCH')>=0:rf = rf.split('SEARCH')[0]
+            wf = open('genotypes.py','w')
+            wf.write(rf+'\nSEARCH = '+str(genotype))
+            wf.close()
 
+                
 def train(train_queue, valid_queue, model, network_params, criterion, optimizer, optimizer_a, lr, train_arch=True):
     objs = utils.AvgrageMeter()
     top1 = utils.AvgrageMeter()
