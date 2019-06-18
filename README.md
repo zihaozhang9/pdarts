@@ -1,10 +1,12 @@
+pdarts神经架构搜索代码。
 这个工程来自[chenxin061](https://github.com/chenxin061/pdarts)
 我修改了train_search.py和train_cifar.py文件。现在你可以运行run.sh自动化搜索并训练和测试
-你可以修改run.sh中的init_channels和layers参数来更改网络结构。论文中最好的结构使用init_channels=36,layers=20
+你可以修改run.sh中的init_channels和layers参数来更改网络结构。论文中最好的结构使用init_channels=36,layers=20.我在cifar10数据集上训练最好的结构只有95.9%的精度,未达到论文中说的2.5错误率。
 
+Pdarts neural architecture search code.
 This project is from [chenxin061](https://github.com/chenxin061/pdarts).
 I modified the train_search.py and train_cifar.py files. Now you can run run.sh to automate the search and train and test.
-You can change the network structure by modifying the init_channels and layers parameters in run.sh. The best structure in the paper uses init_channels=36, layers=20.
+You can change the network structure by modifying the init_channels and layers parameters in run.sh. The best structure in the paper uses init_channels=36, layers=20.The best structure I trained on the cifar10 dataset was only 95.9% accuracy, not reaching the 2.5 error rate stated in the paper.
 
 ------------------------------------------------------------------------------------
 # [Progressive Differentiable Architecture Search: Bridging the Depth Gap between Search and Evaluation](https://arxiv.org/abs/1904.12760)
