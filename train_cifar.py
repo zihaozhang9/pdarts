@@ -42,7 +42,10 @@ parser.add_argument('--cifar100', action='store_true', default=False, help='if u
 
 args, unparsed = parser.parse_known_args()
 
-args.save = '{}eval-{}-{}'.format(args.save, args.note, time.strftime("%Y%m%d-%H%M%S"))
+#args.save = '{}eval-{}-{}'.format(args.save, args.note, time.strftime("%Y%m%d-%H%M%S"))
+import shutil
+args.save = '{}eval'.format(args.save)
+if os.path.exists(args.save):shutil.rmtree(args.save)
 utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
 
 log_format = '%(asctime)s %(message)s'
@@ -127,8 +130,11 @@ def main():
         end_time = time.time()
         duration = end_time - start_time
         print('Epoch time: %ds.' % duration )
-        utils.save(model, os.path.join(args.save, 'weights.pt'))
-
+        if num_gpus >1 :
+            utils.save(model.module, os.path.join(args.save, 'weights.pt'))
+        else:
+            utils.save(model, os.path.join(args.save, 'weights.pt'))
+        
 def train(train_queue, model, criterion, optimizer):
     objs = utils.AvgrageMeter()
     top1 = utils.AvgrageMeter()
